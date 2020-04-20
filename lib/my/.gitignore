@@ -1,0 +1,20 @@
+# Build and result binaries
+*.a
+*.o
+libmy_tests
+
+# Temporary files
+*~
+
+# Doxygen documentation
+doc
+
+# Code coverage reports
+*.gcda
+*.gcno
+*.gcov
+
+# Sourcetrail project files
+*.srctrlbm
+*.srctrldb
+*.srctrlprj
