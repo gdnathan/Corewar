@@ -1,0 +1,23 @@
+# Built object files
+*.o
+*.a
+.vscode
+
+# Temporary files 
+*~
+
+# Coverage files
+*.gcov
+*.gcno
+*.gcda
+
+# Copied headers from libmy
+/lib/include/*.h
+
+# Final binary
+asm/asm
+corewar/corewar
+corewar_tests
+
+# Sourcetrail project
+*.srctrl*
