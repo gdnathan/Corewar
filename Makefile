@@ -54,10 +54,10 @@ tests_run: tests
 	./$(TESTS_OUT)
 	$(GCOV) $(OBJS)
 
-asm: $(ASM_DIR)/Makefile
+asm: $(LIBMY) $(ASM_DIR)/Makefile
 	@$(MAKE) -C $(ASM_DIR) all
 
-vm: $(VM_DIR)/Makefile
+vm: $(LIBMY) $(VM_DIR)/Makefile
 	@$(MAKE) -C $(VM_DIR) all
 
 $(LIBMY): $(LIBMY_DIR)/Makefile
