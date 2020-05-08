@@ -5,7 +5,7 @@
 ** ge
 */
 
-#include "../lib/include/get_next_line.h"
+#include "get_next_line.h"
 #include <stdlib.h>
 #include <stddef.h>
 #include <unistd.h>

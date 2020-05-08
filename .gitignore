@@ -21,3 +21,10 @@ corewar_tests
 
 # Sourcetrail project
 *.srctrl*
+
+# others
+corewar_binaries
+asm/champions/abel.s
+asm/champions/bill.s
+asm/champions/pdd.s
+asm/champions/tyron.s

@@ -196,4 +196,5 @@ int   str_contains(char const *str, char c);
 ///
 int   is_char_type(char c, int mask);
 
+char *my_strdup_to_char(char *src, char c);
 #endif //__MY_STR_H
