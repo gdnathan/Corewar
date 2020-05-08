@@ -8,6 +8,8 @@
 #ifndef __OPCODES_H
 #define __OPCODES_H
 
+#define PACKED __attribute__((packed))
+
 typedef enum {
     OP_LIVE     = 0x01,
 
@@ -33,7 +35,7 @@ typedef enum {
     OP_AFF      = 0x10
 } core_opcode_t;
 
-struct core_op_def {
+struct PACKED core_op_def {
     core_opcode_t code;
     char coding;
 };
