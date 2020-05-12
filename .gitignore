@@ -11,9 +11,6 @@
 *.gcno
 *.gcda
 
-# Copied headers from libmy
-/lib/include/*.h
-
 # Final binary
 asm/asm
 corewar/corewar
