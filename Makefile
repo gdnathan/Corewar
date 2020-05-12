@@ -6,7 +6,7 @@
 ##
 
 all:
-	$(MAKE) -C generator/
+	$(MAKE) -C asm/
 	$(MAKE) -C corewar/
 
 clean:
