@@ -8,6 +8,13 @@
 #ifndef __OPCODES_H
 #define __OPCODES_H
 
+/*
+** header
+*/
+const char MAGIC[4] = {0x00, 0xEA, 0x83, 0xF3};
+# define PROG_NAME_LENGTH        128
+# define COMMENT_LENGTH          2048
+
 #define PACKED __attribute__((packed))
 
 typedef enum {

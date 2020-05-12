@@ -15,6 +15,7 @@ YELLOW=\x1b[33;
 SRC		=	src/asm.c\
 			src/error_handling.c\
 			src/get_next_line.c\
+			src/parsing.c\
 
 MAIN	=	src/main.c
 
