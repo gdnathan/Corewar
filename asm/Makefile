@@ -19,6 +19,7 @@ SRC		=	src/asm.c\
 			src/parse_instructions.c\
 			src/compile.c\
 			src/labels.c\
+			src/nbr_base.c
 
 MAIN	=	src/main.c
 

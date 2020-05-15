@@ -12,6 +12,7 @@
 #include "op.h"
 
 // private prototypes
+
 void new_label(labels_t **label, char *buffer, instructions_t *instruct);
 
 int compute_size(instructions_t *new)
@@ -73,7 +74,8 @@ int parse_parameters(instructions_t *new, char *buffer)
     return compute_size(new);
 }
 
-void new_instruction(instructions_t **instruction, char *buffer, labels_t **label)
+void new_instruction(instructions_t **instruction, char *buffer,
+                    labels_t **label)
 {
     instructions_t *new = malloc(sizeof(instructions_t));
     int i = 0;

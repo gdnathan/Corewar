@@ -23,8 +23,11 @@
 */
 
 // private prototypes
+
 int parse_infos(int fd, info_t *info);
+
 int compile_header(info_t *info, FILE *fp);
+
 int compile_instruction(info_t *infos, FILE *fp);
 
 int my_asm(char *file)

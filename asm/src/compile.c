@@ -13,6 +13,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
+int my_nbr_base(unsigned int nb, char *base);
+
 const char myMAGIC[4] = {0x00, 0xEA, 0x83, 0xF3};
 
 int compile_header(info_t *info, FILE *fp)
@@ -46,17 +48,6 @@ char *found_instruct_code(char *opcode)
         i += 1;
     }
     write(2, "error\n", 6);
-}
-
-int my_nbr_base(unsigned int nb, char *base)
-{
-    int mod;
-
-    if (nb > 0) {
-        mod = nb % my_strlen(base);
-        my_putnbr_base(nb / my_strlen(base), base);
-        my_putchar(base[mod]);
-    }
 }
 
 char *dec_to_hex(int nb)
@@ -114,7 +105,6 @@ int compile_instruction(info_t *infos, FILE *fp)
             fwrite(param_type(tmp->type), 1, 1, fp);
         }
         i = 0;
-        //print_parameters(fp, tmp);
         tmp = tmp->next;
     }
 }
