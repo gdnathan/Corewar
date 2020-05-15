@@ -10,6 +10,10 @@
 #include "my_io.h"
 #include "my_macros.h"
 #include "asm.h"
+#include "op.h"
+
+// *private prototypes:
+void new_instruction(instructions_t **instruction, char *buffer, labels_t **label);
 
 void set_basic_info(info_t *info, char *buffer)
 {
@@ -43,32 +47,6 @@ void formater(char **buffer)
         (*buffer)++;
 }
 
-void new_instruction(instructions_t **instruction, char *buffer)
-{
-    instructions_t *new = malloc(sizeof(instructions_t));
-    int i = 0;
-
-    _malloc_error(new);
-    while (buffer[i] != '\0' && buffer[i] != ':')
-        i += 1;
-    if (buffer[i] == '\0' || buffer[i - 1] == '%') {
-        new->optional_label = NULL;
-        i = 0;
-    } else {
-        new->optional_label = my_strdup_to_char(buffer, ':');
-        i += 2;
-    }
-    new->op_code = my_strdup_to_char(buffer + i, ' ');
-    i += my_strlen(new->op_code);
-    new->parameters = my_strdup(buffer + ++i);
-    new->next = NULL;
-    new->prev = *instruction;
-    if (*instruction == NULL)
-        *instruction = new;
-    else
-        (*instruction)->next = new;
-}
-
 int parse_infos(int fd, info_t *info)
 {
     char *buffer = get_next_line(fd);
@@ -86,7 +64,7 @@ int parse_infos(int fd, info_t *info)
             tmp = info->instruct;
             if (tmp) while (tmp->next != NULL)
                 tmp = tmp->next;
-            new_instruction(info->instruct ? &tmp : &info->instruct, buffer);
+            new_instruction(info->instruct ? &tmp : &info->instruct, buffer, &info->label);
         }
         buffer = get_next_line(fd);
     } while (buffer != NULL);

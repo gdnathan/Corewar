@@ -197,4 +197,5 @@ int   str_contains(char const *str, char c);
 int   is_char_type(char c, int mask);
 
 char *my_strdup_to_char(char *src, char c);
+char **my_str_to_word_array(char *str);
 #endif //__MY_STR_H

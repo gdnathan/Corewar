@@ -1,7 +1,8 @@
 # Built object files
 *.o
 *.a
-.vscode
+*.vscode
+vgcore.*
 
 # Temporary files 
 *~
@@ -25,3 +26,5 @@ asm/champions/abel.s
 asm/champions/bill.s
 asm/champions/pdd.s
 asm/champions/tyron.s
+old_op
+Abel.cor

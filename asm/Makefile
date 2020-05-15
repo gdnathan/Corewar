@@ -15,7 +15,10 @@ YELLOW=\x1b[33;
 SRC		=	src/asm.c\
 			src/error_handling.c\
 			src/get_next_line.c\
-			src/parsing.c\
+			src/parse_basic_infos.c\
+			src/parse_instructions.c\
+			src/compile.c\
+			src/labels.c\
 
 MAIN	=	src/main.c
 
@@ -51,6 +54,7 @@ DOLIB:
 
 clean:
 	@rm -fv build/*
+	@rm -fv $(OBJ)
 	@$(MAKE) clean -C ../lib/my
 
 debug:	fclean DOLIB $(OBJ)
@@ -75,6 +79,6 @@ re:	fclean all
 
 %.o:    %.c
 		@echo -n "Compiling... :"
-		@$(CC) $(CFLAGS) -c $< -o $@ && echo -e " $< $(GREEN)[ OK ]$(END)" || echo -e " $< $(RED)[ KO ]$(END)"
+		@$(CC) $(CFLAGS) -c $< -o $@ -g && echo -e " $< $(GREEN)[ OK ]$(END)" || echo -e " $< $(RED)[ KO ]$(END)"
 
 .PHONY: all clean fclean re debug test DOLIB
