@@ -85,7 +85,7 @@ clean:
 	@$(call rich_echo,"RM","$(BUILD_DIR)/*.o")
 	@rm -f $(OBJS) $(OBJS_TESTS)
 	@$(call rich_echo,"RM","*.gcda *.gcno")
-	@find $(BUILD_DIR) -name "*.gcda" -delete -or -name "*.gcno" -delete
+	@find $(BUILD_DIR) -name "*.gcda" -delete -or -name "*.gcno" -delete, true
 
 fclean: clean
 	@$(call rich_echo,"RM","$(OUTPUT) $(TESTS_OUT) *.gcov $(HEADS_OUT)/*.h")
