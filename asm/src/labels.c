@@ -23,7 +23,7 @@ void new_label(labels_t **label, char *buffer, instructions_t *instruct)
     labels_t *new = malloc(sizeof(labels_t));
     instructions_t *tmp = instruct;
     labels_t *cpy = *label;
-    
+
     _malloc_error(new);
     new->name = my_strdup_to_char(buffer, ':');
     new->adress = 0;

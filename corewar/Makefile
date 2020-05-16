@@ -1,8 +1,9 @@
-# EPITECH PROJECT, 2020
-# COREWAR
-# File description:
-# Corewar VM
-
+##
+## EPITECH PROJECT, 2019
+## makefile
+## File description:
+## makefile for infadd prog
+##
 
 LIBMY_DIR    = ../lib/my
 LIBMY        = $(LIBMY_DIR)/libmy.a

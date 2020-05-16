@@ -1,7 +1,7 @@
-# EPITECH PROJECT, 2019
-# LIBMY
+# EPITECH PROJECT, 2020
+# COREWAR
 # File description:
-# Makefile for libmy
+# Corewar VM
 
 
 CC          := gcc

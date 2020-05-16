@@ -13,7 +13,7 @@
 #include "asm.h"
 #include <unistd.h>
 
-// ! ARCHITECTURE:
+// !ARCHITECTURE:
 // *
 /*
 * main->asm

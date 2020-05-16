@@ -89,7 +89,6 @@ char *param_type(p_type_t type[4])
     }
     c = bits;
     return &c;
-    //return dec_to_hex(bits);
 }
 
 int compile_instruction(info_t *infos, FILE *fp)
