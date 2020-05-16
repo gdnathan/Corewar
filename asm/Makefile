@@ -17,7 +17,8 @@ SRC		=	src/asm.c\
 			src/get_next_line.c\
 			src/parse_basic_infos.c\
 			src/parse_instructions.c\
-			src/compile.c\
+			src/compile_header_and_instruct.c\
+			src/compile_parameters.c\
 			src/labels.c\
 			src/nbr_base.c
 

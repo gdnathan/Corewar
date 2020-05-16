@@ -13,7 +13,11 @@
 #include <stdio.h>
 #include <unistd.h>
 
+// * privates prototypes:
+
 int my_nbr_base(unsigned int nb, char *base);
+
+void print_parameters(info_t *infos, instructions_t *tmp, FILE *fp);
 
 const char myMAGIC[4] = {0x00, 0xEA, 0x83, 0xF3};
 
@@ -103,9 +107,9 @@ int compile_instruction(info_t *infos, FILE *fp)
                 break;
             i += 1;
         }
-        if (i == 4) {
+        if (i == 4)
             fwrite(param_type(tmp->type), 1, 1, fp);
-        }
+        print_parameters(infos, tmp, fp);
         i = 0;
         tmp = tmp->next;
     }
