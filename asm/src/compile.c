@@ -48,17 +48,6 @@ char *found_instruct_code(char *opcode)
     write(2, "error\n", 6);
 }
 
-int my_nbr_base(unsigned int nb, char *base)
-{
-    int mod;
-
-    if (nb > 0) {
-        mod = nb % my_strlen(base);
-        my_putnbr_base(nb / my_strlen(base), base);
-        my_putchar(base[mod]);
-    }
-}
-
 char *dec_to_hex(int nb)
 {
     char *hex = malloc(sizeof(char) * 2);
@@ -77,6 +66,7 @@ char *param_type(p_type_t type[4])
 {
     int i = 0;
     unsigned int bits = 0;
+    static char c = '\0';
 
     while (i < 4) {
         switch (type[i]) {
@@ -95,7 +85,9 @@ char *param_type(p_type_t type[4])
             bits = bits << 2;
         i += 1;
     }
-    return dec_to_hex(bits);
+    c = bits;
+    return &c;
+    //return dec_to_hex(bits);
 }
 
 int compile_instruction(info_t *infos, FILE *fp)
