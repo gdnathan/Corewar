@@ -12,8 +12,6 @@
 
 void label_path(instructions_t *tmp, instructions_t *instruct, labels_t *new)
 {
-    //while (tmp->prev != NULL)
-    //    tmp = tmp->prev;
     while (tmp != NULL) {
         new->adress += tmp->size;
         tmp = tmp->next;

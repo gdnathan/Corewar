@@ -16,19 +16,19 @@
 
 
 static const char *no_params[4] = {
-   "live",
-   "zjmp",
-   "fork",
-   "lfork"
+    "live",
+    "zjmp",
+    "fork",
+    "lfork"
 };
 
 static const char *lil_ind[6] = {
-   "ldi",
-   "zjmp",
-   "sti",
-   "fork",
-   "lldi",
-   "lfork"
+    "ldi",
+    "zjmp",
+    "sti",
+    "fork",
+    "lldi",
+    "lfork"
 };
 
 #endif /* !OP_H_ */

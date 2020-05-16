@@ -13,7 +13,9 @@
 #include "op.h"
 
 // *private prototypes:
-void new_instruction(instructions_t **instruction, char *buffer, labels_t **label);
+
+void new_instruction(instructions_t **instruction, char *buffer,
+                    labels_t **label);
 
 void set_basic_info(info_t *info, char *buffer)
 {
@@ -64,7 +66,8 @@ int parse_infos(int fd, info_t *info)
             tmp = info->instruct;
             if (tmp) while (tmp->next != NULL)
                 tmp = tmp->next;
-            new_instruction(info->instruct ? &tmp : &info->instruct, buffer, &info->label);
+            new_instruction(info->instruct ? &tmp
+                            : &info->instruct, buffer, &info->label);
         }
         buffer = get_next_line(fd);
     } while (buffer != NULL);
