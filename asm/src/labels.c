@@ -27,6 +27,7 @@ void new_label(labels_t **label, char *buffer, instructions_t *instruct)
     _malloc_error(new);
     new->name = my_strdup_to_char(buffer, ':');
     new->adress = 0;
+    new->next = NULL;
 
     if (instruct != NULL) {
         label_path(tmp, instruct, new);

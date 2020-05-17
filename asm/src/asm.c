@@ -37,6 +37,7 @@ int my_asm(char *file)
     info->instruct = NULL;
     FILE *fp = NULL;
 
+    info->label = NULL;
     if (fd == -1)
         return fd_error(file, fd);
     _malloc_error(info);

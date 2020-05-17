@@ -79,15 +79,13 @@ void new_instruction(instructions_t **instruction, char *buffer,
 {
     instructions_t *new = malloc(sizeof(instructions_t));
     int i = 0;
-
     _malloc_error(new);
     while (buffer[i] != '\0' && buffer[i] != ':')
         i += 1;
     if (buffer[i] != '\0' && buffer[i - 1] != '%') {
         new_label(label, buffer, *instruction);
         i += 2;
-    } else
-        i = 0;
+    } else i = 0;
     new->op_code = my_strdup_to_char(buffer + i, ' ');
     if (!new->op_code[0])
         return;
@@ -97,6 +95,5 @@ void new_instruction(instructions_t **instruction, char *buffer,
     new->prev = *instruction;
     if (*instruction == NULL)
         *instruction = new;
-    else
-        (*instruction)->next = new;
+    else (*instruction)->next = new;
 }

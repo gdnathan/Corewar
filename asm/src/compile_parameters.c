@@ -43,23 +43,23 @@ int label_adress(info_t *infos, instructions_t *tmp, FILE *fp, int i)
     instructions_t *pos_scan = infos->instruct;
     labels_t *label_pos = infos->label;
     int pos = 0;
-    int adress = 0;
+    int relative_pos = 0;
 
     while (pos_scan != tmp) {
         pos += pos_scan->size;
         pos_scan = pos_scan->next;
     }
-    while (my_strcmp(label_pos->name, tmp->parameters[i] + 1) != 1)
+    while (my_strcmp(label_pos->name, tmp->parameters[i] + 1) != 1) {
         label_pos = label_pos->next;
-    adress = label_pos->adress - pos;
-    //printf("ADRESS: %d\nfrom label at %d & param at %d\n", adress, label_pos->adress, pos);
-    if (adress >= 0) {
+    }
+    relative_pos = label_pos->adress - pos;
+    if (relative_pos >= 0) {
         fwrite("\0", 1, 1, fp);
     } else {
         char c = 0xFF;
         fwrite(&c, 1, 1, fp);
     }
-    return adress;
+    return relative_pos;
 }
 
 char *set_param_bytecode(info_t *infos, instructions_t *tmp,
@@ -75,17 +75,9 @@ char *set_param_bytecode(info_t *infos, instructions_t *tmp,
         bc = label_adress(infos, tmp, fp, i);
         bytecode = bc;
         return &bytecode;
-        //static char c = '\0';
-        //int i = -12;
-        //c = i;
-        //fwrite(&c, 1, 1, fp);
-        //return &c;
     }
     bytecode = my_getnbr(tmp->parameters[i]);
-    
     fill_0(tmp->type[i], fp);
-    //if (bytecode == 0)
-    //    fwrite("\0", 1, 1, fp);
     return &bytecode;
 }
 

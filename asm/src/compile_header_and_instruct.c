@@ -21,17 +21,13 @@ void print_parameters(info_t *infos, instructions_t *tmp, FILE *fp);
 
 const char myMAGIC[4] = {0x00, 0xEA, 0x83, 0xF3};
 
-int compile_header(info_t *info, FILE *fp)
+void print_prog_size(info_t *info, FILE *fp)
 {
-    int i = 0;
     int size = 0;
+    int i = 0;
     char bytecode = '\0';
     instructions_t *tmp = info->instruct;
-    fwrite(myMAGIC, 1, 4, fp);
-    fwrite(info->name, 1,  my_strlen(info->name), fp);
-    while (i++ < PROG_NAME_LENGTH - my_strlen(info->name))
-        fwrite("\0", 1, 1, fp);
-    i = 0;
+
     while (i++ < 7)
         fwrite("\0", 1, 1, fp);
     while (tmp != NULL) {
@@ -40,6 +36,17 @@ int compile_header(info_t *info, FILE *fp)
     }
     bytecode = size;
     fwrite (&bytecode, 1, 1, fp);
+}
+
+int compile_header(info_t *info, FILE *fp)
+{
+    int i = 0;
+    fwrite(myMAGIC, 1, 4, fp);
+    fwrite(info->name, 1,  my_strlen(info->name), fp);
+    while (i++ < PROG_NAME_LENGTH - my_strlen(info->name))
+        fwrite("\0", 1, 1, fp);
+    i = 0;
+    print_prog_size(info, fp);
     fwrite(info->description, 1, my_strlen(info->description), fp);
     i = 0;
     while (i++ < COMMENT_LENGTH - my_strlen(info->description) + 4)
@@ -62,26 +69,10 @@ char *found_instruct_code(char *opcode)
     write(2, "error\n", 6);
 }
 
-char *dec_to_hex(int nb)
+char *param_type(p_type_t type[4], int i)
 {
-    char *hex = malloc(sizeof(char) * 2);
-
-    _malloc_error(hex);
-    hex[0] = (nb / 16 + 48);
-    if (nb % 16 > 9) {
-        hex[1] = (nb % 16) + 87;
-    } else if (nb % 16 >= 0) {
-        hex[1] = nb % 16 + 48;
-    }
-    return hex;
-}
-
-char *param_type(p_type_t type[4])
-{
-    int i = 0;
     unsigned int bits = 0;
     static char c = '\0';
-
     while (i < 4) {
         switch (type[i]) {
             case reg:
@@ -93,7 +84,6 @@ char *param_type(p_type_t type[4])
                 break;
             case indirect:
                 bits += 3;
-                break;
         }
         if (i < 3)
             bits = bits << 2;
@@ -116,7 +106,7 @@ int compile_instruction(info_t *infos, FILE *fp)
             i += 1;
         }
         if (i == 4)
-            fwrite(param_type(tmp->type), 1, 1, fp);
+            fwrite(param_type(tmp->type, 0), 1, 1, fp);
         print_parameters(infos, tmp, fp);
         i = 0;
         tmp = tmp->next;
