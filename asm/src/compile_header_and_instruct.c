@@ -24,14 +24,22 @@ const char myMAGIC[4] = {0x00, 0xEA, 0x83, 0xF3};
 int compile_header(info_t *info, FILE *fp)
 {
     int i = 0;
-
+    int size = 0;
+    char bytecode = '\0';
+    instructions_t *tmp = info->instruct;
     fwrite(myMAGIC, 1, 4, fp);
     fwrite(info->name, 1,  my_strlen(info->name), fp);
     while (i++ < PROG_NAME_LENGTH - my_strlen(info->name))
         fwrite("\0", 1, 1, fp);
     i = 0;
-    while (i++ < 8)
+    while (i++ < 7)
         fwrite("\0", 1, 1, fp);
+    while (tmp != NULL) {
+        size += tmp->size;
+        tmp = tmp->next;
+    }
+    bytecode = size;
+    fwrite (&bytecode, 1, 1, fp);
     fwrite(info->description, 1, my_strlen(info->description), fp);
     i = 0;
     while (i++ < COMMENT_LENGTH - my_strlen(info->description) + 4)

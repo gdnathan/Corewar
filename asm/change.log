@@ -1,0 +1,27 @@
+///////// FUNCTIONAL ASM CONVERTER ///////////
+
+DONE:
+
+-parse every instruction, parameters, and compute size of each instruction
+-print name in bytecode
+-print size of the program (thanks to the parsing who compute size of each instructions)
+-print descriptions in bytecode
+-parse every labels
+-print instructions:
+    -labels adress ?1?
+    -register
+    -direct
+    -indirect
+
+WORK IN PROGRESS:
+
+-cleaning code
+-valgrind
+
+TODO:
+
+-more and more error handling 
+
+ADDITIONAL INFORMATIONS:
+
+?1? -> negative adress dont print corectly (-12 == FFF4, only F4 is printed)

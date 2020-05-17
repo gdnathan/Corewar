@@ -89,6 +89,8 @@ void new_instruction(instructions_t **instruction, char *buffer,
     } else
         i = 0;
     new->op_code = my_strdup_to_char(buffer + i, ' ');
+    if (!new->op_code[0])
+        return;
     i += my_strlen(new->op_code);
     new->size = parse_parameters(new, my_strdup(buffer + ++i));
     new->next = NULL;
