@@ -36,3 +36,8 @@ int fd_error(char *file, int fd)
     }
     return 84;
 }
+
+int line_error(char *buffer)
+{
+    return 1;
+}

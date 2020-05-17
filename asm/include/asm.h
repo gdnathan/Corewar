@@ -8,6 +8,7 @@
 #ifndef ASM_H_
 #define ASM_H_
 
+int line_error(char *buffer);
 int fd_error(char *file, int fd);
 
 typedef enum p_type {

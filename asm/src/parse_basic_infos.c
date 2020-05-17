@@ -62,7 +62,7 @@ int parse_infos(int fd, info_t *info)
         formater(&buffer);
         if (buffer[0] && buffer[0] == '.')
             set_basic_info(info, buffer + 1);
-        else if (buffer[0] && buffer[0] != '#') {
+        else if (buffer[0] && buffer[0] != '#' && line_error(buffer) == 1) {
             tmp = info->instruct;
             if (tmp) while (tmp->next != NULL)
                 tmp = tmp->next;

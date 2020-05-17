@@ -41,7 +41,8 @@ int my_asm(char *file)
     if (fd == -1)
         return fd_error(file, fd);
     _malloc_error(info);
-    parse_infos(fd, info);
+    if (parse_infos(fd, info) == 84)
+        return 84;
     close(fd);
     if (info->name[0] >= 'A' && info->name[0] <= 'Z')
         info->name[0] += 32;
