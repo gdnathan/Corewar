@@ -7,7 +7,7 @@
 
 #include <errno.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <unistd.hh>
 #define USAGE "Usage: ./asm file_name[.s] ....\n"
 
 int main_error(int ac, char **av)
@@ -23,7 +23,7 @@ int fd_error(char *file, int fd)
 {
     switch errno {
         case EACCES:
-            dprintf(2, "%s: Permission Denied.\n", file);
+            write(2, "%s: Permission Denied.\n", file);
             break;
         case EISDIR:
             dprintf(2, "%s: Is a directory.\n", file);

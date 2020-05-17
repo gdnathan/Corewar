@@ -59,7 +59,6 @@ short label_adress(info_t *infos, instructions_t *tmp, FILE *fp, int i)
         char c = 0xFF;
         fwrite(&c, 1, 1, fp);
     }
-    printf("%d\nlabel: %d\n", relative_pos, label_pos->adress);
     return relative_pos;
 }
 
