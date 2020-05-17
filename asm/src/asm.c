@@ -43,6 +43,8 @@ int my_asm(char *file)
     _malloc_error(info);
     parse_infos(fd, info);
     close(fd);
+    if (info->name[0] >= 'A' && info->name[0] <= 'Z')
+        info->name[0] += 32;
     fp = fopen(my_strcat(info->name, ".cor"), "w");
     compile_header(info, fp);
     compile_instruction(info, fp);

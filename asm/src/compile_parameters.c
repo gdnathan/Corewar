@@ -38,12 +38,12 @@ void fill_0(p_type_t type, FILE *fp)
     }
 }
 
-int label_adress(info_t *infos, instructions_t *tmp, FILE *fp, int i)
+short label_adress(info_t *infos, instructions_t *tmp, FILE *fp, int i)
 {
     instructions_t *pos_scan = infos->instruct;
     labels_t *label_pos = infos->label;
     int pos = 0;
-    int relative_pos = 0;
+    short relative_pos = 0;
 
     while (pos_scan != tmp) {
         pos += pos_scan->size;
@@ -59,6 +59,7 @@ int label_adress(info_t *infos, instructions_t *tmp, FILE *fp, int i)
         char c = 0xFF;
         fwrite(&c, 1, 1, fp);
     }
+    printf("%d\nlabel: %d\n", relative_pos, label_pos->adress);
     return relative_pos;
 }
 
@@ -67,7 +68,7 @@ char *set_param_bytecode(info_t *infos, instructions_t *tmp,
 {
     int size = tmp->type[i] == direct ? 4 : 2;
     static char bytecode = '\0';
-    int bc = 0;
+    short bc = 0;
 
     if (tmp->parameters[i][0] == '%')
         tmp->parameters[i] += 1;

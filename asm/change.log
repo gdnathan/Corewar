@@ -8,7 +8,7 @@ DONE:
 -print descriptions in bytecode
 -parse every labels
 -print instructions:
-    -labels adress ?1?
+    -labels adress 
     -register
     -direct
     -indirect
@@ -23,4 +23,4 @@ TODO:
 
 ADDITIONAL INFORMATIONS:
 
-?1? -> negative adress dont print corectly (-12 == FFF4, only F4 is printed)
+[solved] -> negative adress dont print corectly (-12 == FFF4, only F4 is printed)

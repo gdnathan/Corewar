@@ -12,10 +12,14 @@
 
 void label_path(instructions_t *tmp, instructions_t *instruct, labels_t *new)
 {
+    while (tmp->prev != NULL)
+        tmp = tmp->prev;
     while (tmp != NULL) {
+        printf("size: %d\n", tmp->size);
         new->adress += tmp->size;
         tmp = tmp->next;
     }
+    printf("final adress: %d\n", new->adress);
 }
 
 void new_label(labels_t **label, char *buffer, instructions_t *instruct)
