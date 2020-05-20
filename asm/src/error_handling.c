@@ -7,7 +7,7 @@
 
 #include <errno.h>
 #include <stdio.h>
-#include <unistd.hh>
+#include <unistd.h>
 #define USAGE "Usage: ./asm file_name[.s] ....\n"
 
 int main_error(int ac, char **av)
