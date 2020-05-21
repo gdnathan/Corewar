@@ -25,6 +25,8 @@ int check_name(char *name)
         if (!name[i])
             return (84);
     }
+    if (name[i] == '"' && name[i - 1] == '"')
+        return (84);
     while (name[i++] != '"') {
         if (!name[i])
             return (84);
@@ -44,6 +46,8 @@ int check_description(char *description)
         if (!description[i])
             return (84);
     }
+    if (description[i] == '"' && description[i - 1] == '"')
+        return (84);
     while (description[i++] != '"') {
         if (!description[i])
             return (84);
