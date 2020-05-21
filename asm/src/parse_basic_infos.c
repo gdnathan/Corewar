@@ -16,6 +16,7 @@
 
 void new_instruction(instructions_t **instruction, char *buffer,
                     labels_t **label);
+
 int check_name(char *name)
 {
     int i = 0;
@@ -29,6 +30,8 @@ int check_name(char *name)
             return (84);
     }
     if (name[i])
+        return (84);
+    if (i > PROG_NAME_LENGTH + 7)
         return (84);
     return (0);
 }
@@ -47,6 +50,8 @@ int check_description(char *description)
     }
     if (description[i])
         return (84);
+    if (i > COMMENT_LENGTH + 10)
+        return (84);
     return (0);
 }
 
@@ -55,18 +60,18 @@ int set_basic_info(info_t *info, char *buffer)
     if (my_strncmp(buffer, "name", 4) == 1) {
         info->name = my_strdup(buffer + 6);
         info->name[my_strlen(info->name) - 1] = '\0';
-        return;
-    }
-    if (check_name(info->name) == 84)
-        return (84);
-    if (my_strncmp(buffer, "comment", 7) == 1) {
+        if (check_name(buffer) == 84)
+            return (84);
+        return (0);
+    } else if (my_strncmp(buffer, "comment", 7) == 1) {
         info->description = my_strdup(buffer + 9);
         info->description[my_strlen(info->description) - 1] = '\0';
-        return;
-    }
-    if (check_description(info->description) == 84)
+        if (check_description(buffer) == 84)
+            return (84);
+        return (0);
+    } else {
         return (84);
-    return (0);
+    }
 }
 
 void formater(char **buffer)

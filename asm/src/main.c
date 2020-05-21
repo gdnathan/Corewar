@@ -15,6 +15,8 @@ int main(int argc, char **argv)
     if (status != 0)
         return status;
     do {
-        my_asm(argv[i]);
+        if (my_asm(argv[i]) == 84)
+            return (84);
     } while (argv[++i]);
+    return (0);
 }
