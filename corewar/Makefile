@@ -26,7 +26,7 @@ OUTPUT       = corewar
 TESTS_OUT    = corewar_tests
 BONUS_OUT    = corewar_bonus
 
-SOURCE_DIR   = ../src/corewar
+SOURCE_DIR   = ./src
 BUILD_DIR    = ../build/corewar
 TESTS_DIR    = ../tests/corewar
 BONUS_DIR    = ../bonus/corewar

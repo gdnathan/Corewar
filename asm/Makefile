@@ -1,86 +1,96 @@
-##
-## EPITECH PROJECT, 2019
-## makefile
-## File description:
-## makefile for infadd prog
-##
+# EPITECH PROJECT, 2020
+# COREWAR
+# File description:
+# Corewar assembler
 
-MAKEFLAGS += --no-print-directory
 
-END=\x1b[0m
-GREEN=\x1b[32;01m
-RED=\x1b[31;01m
-YELLOW=\x1b[33;
+LIBMY_DIR    = ../lib/my
+LIBMY        = $(LIBMY_DIR)/libmy.a
 
-SRC		=	src/asm.c\
-			src/error_handling.c\
-			src/get_next_line.c\
-			src/parse_basic_infos.c\
-			src/parse_instructions.c\
-			src/compile_header_and_instruct.c\
-			src/compile_parameters.c\
-			src/labels.c\
-			src/nbr_base.c
+CC           = gcc
+CC_FLAGS     = -I../lib/include -Iinclude
+ifneq (,$(findstring tests,$(MAKECMDGOALS)))
+	CC_FLAGS += -D__TESTS -fprofile-arcs -ftest-coverage
+endif
 
-MAIN	=	src/main.c
+LD           = gcc
+LD_FLAGS     =
+LD_TESTFLAGS = -lcriterion -lgcov --coverage -Wl,-rpath /usr/local/lib
 
-OBJ	    =	$(SRC:.c=.o) $(MAIN:.c=.o)
+MAKE         = make
 
-NAME	=	asm
+GCOV         = gcov
 
-LIB     =	-L../lib/my -lmy
+OUTPUT       = asm
+TESTS_OUT    = asm_tests
+BONUS_OUT    = asm_bonus
 
-CFLAGS	=	-Iinclude -I../lib/my/include -O2 -g
+SOURCE_DIR   = ./src
+BUILD_DIR    = ../build/asm
+TESTS_DIR    = ../tests/asm
+BONUS_DIR    = ../bonus/asm
 
-WFLAGS		=	-W -Wall -Wextra -g
+SOURCE       = $(shell find $(SOURCE_DIR) -name "*.c")
+SOURCE_TESTS = $(shell find $(TESTS_DIR)  -name "*.c")
+SOURCE_BONUS = $(shell find $(BONUS_DIR)  -name "*.c")
+OBJS         = $(patsubst $(SOURCE_DIR)/%.c,$(BUILD_DIR)/%.o,$(SOURCE))
+OBJS_TESTS   = $(patsubst $(TESTS_DIR)/%.c,$(BUILD_DIR)/%.test.o,$(SOURCE_TESTS))
+OBJS_BONUS   = $(patsubst $(BONUS_DIR)/%.c,$(BUILD_DIR)/%.bonus.o,$(SOURCE_BONUS))
 
-all:	DOLIB $(OBJ) $(NAME) message
 
-message:
-	@echo -en "\e[38;5;33m"
-	@curl -s http://artii.herokuapp.com/make\?text\=$(NAME) || true
-	@echo -e "\e[0m"
+define rich_echo
+[ -t 1 ] && echo -e "\e[1m$(1)\e[0m\t$(2)" || echo -e "$(1)\t$(2)"
+endef
 
-$(NAME):
-	@$(CC) -o $(NAME) $(OBJ) $(LIB) $(CFLAGS)
-	@$(MAKE) CLEAR
 
-CLEAR:
-	@mkdir -p build
-	@mkdir -p debug
-	@mv $(OBJ) build
-	@[ -f vgcore* ] && mv vgcore.* debug || true
+all: $(OUTPUT)
 
-DOLIB:
-	@$(MAKE) -C ../lib/my
+re: fclean all
+
+tests: clean $(TESTS_OUT)
+
+tests_run: tests
+	$(GCOV) $(OBJS)
+
+bonus: $(BONUS_OUT)
+
+$(OUTPUT): $(LIBMY) $(OBJS)
+	@$(call rich_echo,"LD","$@")
+	@$(LD) $(LD_FLAGS) $(OBJS) -o $@ $(LIBMY)
+
+$(TESTS_OUT): $(LIBMY) $(OBJS) $(OBJS_TESTS)
+	@$(call rich_echo,"TESTLD","$@")
+	@$(LD) $(LD_FLAGS) $(LD_TESTFLAGS) $(OBJS) $(OBJS_TESTS) -o $@ $(LIBMY)
+
+$(BONUS_OUT): $(LIBMY) $(OBJS) $(OBJS_BONUS)
+	@$(call rich_echo,"LD","$@")
+	@$(LD) $(LD_FLAGS) $(OBJS) $(OBJS_BONUS) -o $@ $(LIBMY)
+
+
+$(BUILD_DIR)/%.bonus.o: $(BONUS_DIR)/%.c
+	@$(call rich_echo,"CC","$@")
+	@mkdir -p $(@D)
+	@$(CC) $(CC_FLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.test.o: $(TESTS_DIR)/%.c
+	@$(call rich_echo,"TESTCC","$@")
+	@mkdir -p $(@D)
+	@$(CC) $(CC_FLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.c
+	@$(call rich_echo,"CC","$@")
+	@mkdir -p $(@D)
+	@$(CC) $(CC_FLAGS) -c $< -o $@
 
 clean:
-	@rm -fv build/*
-	@rm -fv $(OBJ)
-	@$(MAKE) clean -C ../lib/my
+	@$(call rich_echo,"RM","$(BUILD_DIR)/*.o")
+	@rm -f $(OBJS) $(OBJS_TESTS) $(OBJS_BONUS)
+	@$(call rich_echo,"RM","*.gcda *.gcno")
+	@find $(BUILD_DIR) -name "*.gcda" -delete -or -name "*.gcno" -delete; true
 
-debug:	fclean DOLIB $(OBJ)
-	@$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(WFLAGS) $(LIB)
-	@$(MAKE) CLEAR
+fclean: clean
+	@$(call rich_echo,"RM","$(OUTPUT) $(TESTS_OUT) $(BONUS_OUT) *.gcov")
+	@rm -f $(OUTPUT) $(TESTS_OUT) $(BONUS_OUT) $(wildcard *.gcov)
 
-test_run: fclean DOLIB
-	$(CC) -o unit_tests $(SRC) $(LIB) $(CFLAGS) tests/test.c --coverage -lcriterion
-	./unit_tests
-	rm -fv *.gcda && rm *.gcdo
-	rm -fv unit_tests
-
-coverage:
-	gcovr -exlude tests/
-	gcovr -exlude tests/ --branches
-
-fclean:	clean
-	@rm -fv $(NAME) *.gc*
-	@$(MAKE) fclean -C ../lib/my
-
-re:	fclean all
-
-%.o:    %.c
-		@echo -n "Compiling... :"
-		@$(CC) $(CFLAGS) -c $< -o $@ -g && echo -e " $< $(GREEN)[ OK ]$(END)" || echo -e " $< $(RED)[ KO ]$(END)"
-
-.PHONY: all clean fclean re debug test DOLIB
+.PHONY: clean fclean re all tests tests_run bonus
+.NOTPARALLEL:
