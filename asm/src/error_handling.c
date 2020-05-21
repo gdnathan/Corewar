@@ -23,7 +23,7 @@ int fd_error(char *file, int fd)
 {
     switch errno {
         case EACCES:
-            write(2, "%s: Permission Denied.\n", file);
+            dprintf(2, "%s: Permission Denied.\n", file);
             break;
         case EISDIR:
             dprintf(2, "%s: Is a directory.\n", file);
