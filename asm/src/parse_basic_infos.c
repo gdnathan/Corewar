@@ -44,7 +44,7 @@ void formater(char **buffer)
     while ((*buffer)[0] == ' ') {
         (*buffer)++;
     }
-    while ((*buffer)[i++] != ' ');
+    while ((*buffer)[i] && (*buffer)[i++] != ' ');
     while ((*buffer)[0] == ' ')
         (*buffer)++;
 }
