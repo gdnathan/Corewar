@@ -21,20 +21,17 @@ MAKE         = make --no-print-directory
 
 GCOV         = gcov
 
-OUTPUT       = program
-TESTS_OUT    = program_tests
-BONUS_OUT    = program_bonus
-
 ASM_DIR		 = asm
 VM_DIR       = corewar
 
-SOURCE_DIR   = $(ASM_DIR)/src $(VM_DIR)/src
 BUILD_DIR    = build
 TESTS_DIR    = tests
 
-SOURCE       = $(shell find $(SOURCE_DIR) -name "*.c")
+SOURCE_ASM   = $(shell find $(ASM_DIR)/src -name "*.c")
+SOURCE_VM    = $(shell find $(VM_DIR)/src -name "*.c")
 SOURCE_TESTS = $(shell find $(TESTS_DIR)  -name "*.c")
-OBJS         = $(patsubst $(SOURCE_DIR)/%.c,$(BUILD_DIR)/%.test.o,$(SOURCE))
+OBJS_ASM     = $(patsubst $(ASM_DIR)/src/%.c,$(BUILD_DIR)/asm/%.test.o,$(SOURCE_ASM))
+OBJS_VM      = $(patsubst $(VM_DIR)/src/%.c,$(BUILD_DIR)/vm/%.test.o,$(SOURCE_VM))
 OBJS_TESTS   = $(patsubst $(TESTS_DIR)/%.c,$(BUILD_DIR)/%.test.o,$(SOURCE_TESTS))
 
 
@@ -71,24 +68,29 @@ $(LIBMY): $(LIBMY_DIR)/Makefile
 	@$(MAKE) -C $(LIBMY_DIR) all copy-heads
 	@echo -e "Build for \e[32mlibmy\e[0m finished.\n"
 
-$(TESTS_OUT): $(LIBMY) $(OBJS) $(OBJS_TESTS)
+$(TESTS_OUT): $(LIBMY) $(OBJS_ASM) $(OBJS_VM) $(OBJS_TESTS)
 	@$(call rich_echo,"TESTLD","$@")
-	@$(LD) $(LD_FLAGS) $(LD_TESTFLAGS) $(OBJS) $(OBJS_TESTS) -o $@ $(LIBMY)
+	@$(LD) $(LD_FLAGS) $(LD_TESTFLAGS) $(OBJS_ASM) $(OBJS_VM) $(OBJS_TESTS) -o $@ $(LIBMY)
 
 
-$(BUILD_DIR)/%.test.o: $(TESTS_DIR)/%.c
+$(BUILD_DIR)/asm/%.test.o: $(ASM_DIR)/src/%.c
 	@$(call rich_echo,"TESTCC","$@")
 	@mkdir -p $(@D)
 	@$(CC) $(CC_FLAGS) -c $< -o $@
 
-$(BUILD_DIR)/%.o: $(SOURCE_DIR)/%.c
+$(BUILD_DIR)/vm/%.test.o: $(VM_DIR)/src/%.c
+	@$(call rich_echo,"TESTCC","$@")
+	@mkdir -p $(@D)
+	@$(CC) $(CC_FLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(TESTS_DIR)/%.c
 	@$(call rich_echo,"CC","$@")
 	@mkdir -p $(@D)
 	@$(CC) $(CC_FLAGS) -c $< -o $@
 
 clean:
 	@$(call rich_echo,"RM","$(BUILD_DIR)/*.o")
-	@rm -f $(OBJS) $(OBJS_TESTS)
+	@rm -f $(OBJS_ASM) $(OBJS_VM) $(OBJS_TESTS)
 	@$(call rich_echo,"RM","*.gcda *.gcno")
 	@find $(BUILD_DIR) -name "*.gcda" -delete -or -name "*.gcno" -delete; true
 	@$(MAKE) -C $(LIBMY_DIR) clean
@@ -96,8 +98,8 @@ clean:
 	@$(MAKE) -C $(VM_DIR) clean
 
 fclean: clean
-	@$(call rich_echo,"RM","$(OUTPUT) $(TESTS_OUT) $(BONUS_OUT) *.gcov")
-	@rm -f $(OUTPUT) $(TESTS_OUT) $(BONUS_OUT) $(wildcard *.gcov)
+	@$(call rich_echo,"RM","\*.gcov")
+	@rm -f $(wildcard *.gcov)
 	@$(MAKE) -C $(LIBMY_DIR) fclean
 	@$(MAKE) -C $(ASM_DIR) fclean
 	@$(MAKE) -C $(VM_DIR) fclean
