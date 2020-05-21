@@ -16,19 +16,57 @@
 
 void new_instruction(instructions_t **instruction, char *buffer,
                     labels_t **label);
+int check_name(char *name)
+{
+    int i = 0;
 
-void set_basic_info(info_t *info, char *buffer)
+    while (name[i++] != '"') {
+        if (!name[i])
+            return (84);
+    }
+    while (name[i++] != '"') {
+        if (!name[i])
+            return (84);
+    }
+    if (name[i])
+        return (84);
+    return (0);
+}
+
+int check_description(char *description)
+{
+    int i = 0;
+
+    while (description[i++] != '"') {
+        if (!description[i])
+            return (84);
+    }
+    while (description[i++] != '"') {
+        if (!description[i])
+            return (84);
+    }
+    if (description[i])
+        return (84);
+    return (0);
+}
+
+int set_basic_info(info_t *info, char *buffer)
 {
     if (my_strncmp(buffer, "name", 4) == 1) {
         info->name = my_strdup(buffer + 6);
         info->name[my_strlen(info->name) - 1] = '\0';
         return;
     }
+    if (check_name(info->name) == 84)
+        return (84);
     if (my_strncmp(buffer, "comment", 7) == 1) {
         info->description = my_strdup(buffer + 9);
         info->description[my_strlen(info->description) - 1] = '\0';
         return;
     }
+    if (check_description(info->description) == 84)
+        return (84);
+    return (0);
 }
 
 void formater(char **buffer)
@@ -61,7 +99,8 @@ int parse_infos(int fd, info_t *info)
     do {
         formater(&buffer);
         if (buffer[0] && buffer[0] == '.')
-            set_basic_info(info, buffer + 1);
+            if (set_basic_info(info, buffer + 1) == 84)
+                return (84);
         else if (buffer[0] && buffer[0] != '#' && line_error(buffer) == 1) {
             tmp = info->instruct;
             if (tmp) while (tmp->next != NULL)
