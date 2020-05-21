@@ -9,32 +9,22 @@ LIBMY        = $(LIBMY_DIR)/libmy.a
 
 CC           = gcc
 CC_FLAGS     = -I../lib/include -Iinclude
-ifneq (,$(findstring tests,$(MAKECMDGOALS)))
-	CC_FLAGS += -D__TESTS -fprofile-arcs -ftest-coverage
-endif
 
 LD           = gcc
 LD_FLAGS     =
-LD_TESTFLAGS = -lcriterion -lgcov --coverage -Wl,-rpath /usr/local/lib
-
-MAKE         = make
 
 GCOV         = gcov
 
 OUTPUT       = asm
-TESTS_OUT    = asm_tests
 BONUS_OUT    = asm_bonus
 
 SOURCE_DIR   = ./src
 BUILD_DIR    = ../build/asm
-TESTS_DIR    = ../tests/asm
 BONUS_DIR    = ../bonus/asm
 
 SOURCE       = $(shell find $(SOURCE_DIR) -name "*.c")
-SOURCE_TESTS = $(shell find $(TESTS_DIR)  -name "*.c")
 SOURCE_BONUS = $(shell find $(BONUS_DIR)  -name "*.c")
 OBJS         = $(patsubst $(SOURCE_DIR)/%.c,$(BUILD_DIR)/%.o,$(SOURCE))
-OBJS_TESTS   = $(patsubst $(TESTS_DIR)/%.c,$(BUILD_DIR)/%.test.o,$(SOURCE_TESTS))
 OBJS_BONUS   = $(patsubst $(BONUS_DIR)/%.c,$(BUILD_DIR)/%.bonus.o,$(SOURCE_BONUS))
 
 
@@ -45,12 +35,8 @@ endef
 
 all: $(OUTPUT)
 
-re: fclean all
-
-tests: clean $(TESTS_OUT)
-
-tests_run: tests
-	$(GCOV) $(OBJS)
+re:: fclean
+re:: all
 
 bonus: $(BONUS_OUT)
 
@@ -93,4 +79,3 @@ fclean: clean
 	@rm -f $(OUTPUT) $(TESTS_OUT) $(BONUS_OUT) $(wildcard *.gcov)
 
 .PHONY: clean fclean re all tests tests_run bonus
-.NOTPARALLEL:

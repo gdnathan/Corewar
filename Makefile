@@ -17,7 +17,7 @@ LD           = gcc
 LD_FLAGS     =
 LD_TESTFLAGS = -lcriterion -lgcov --coverage -Wl,-rpath /usr/local/lib
 
-MAKE         = make
+MAKE         = make --no-print-directory
 
 GCOV         = gcov
 
@@ -28,7 +28,7 @@ BONUS_OUT    = program_bonus
 ASM_DIR		 = asm
 VM_DIR       = corewar
 
-SOURCE_DIR   = src
+SOURCE_DIR   = $(ASM_DIR)/src $(VM_DIR)/src
 BUILD_DIR    = build
 TESTS_DIR    = tests
 
@@ -45,9 +45,11 @@ endef
 
 all: asm vm
 
-re: fclean all
+re:: fclean
+re:: all
 
-tests: clean $(TESTS_OUT)
+tests:: clean
+tests:: $(TESTS_OUT)
 
 tests_run: tests
 	$(MAKE) -C $(LIBMY_DIR) tests_run
@@ -55,13 +57,19 @@ tests_run: tests
 	$(GCOV) $(OBJS)
 
 asm: $(LIBMY) $(ASM_DIR)/Makefile
+	@echo -e "\nBuilding \e[33masm\e[0m..."
 	@$(MAKE) -C $(ASM_DIR) all
+	@echo -e "Build for \e[33masm\e[0m finished.\n"
 
 vm: $(LIBMY) $(VM_DIR)/Makefile
+	@echo -e "\nBuilding \e[34mcorewar\e[0m..."
 	@$(MAKE) -C $(VM_DIR) all
+	@echo -e "Build for \e[34mvm\e[0m finished.\n"
 
 $(LIBMY): $(LIBMY_DIR)/Makefile
+	@echo -e "\nBuilding \e[32mlibmy\e[0m..."
 	@$(MAKE) -C $(LIBMY_DIR) all copy-heads
+	@echo -e "Build for \e[32mlibmy\e[0m finished.\n"
 
 $(TESTS_OUT): $(LIBMY) $(OBJS) $(OBJS_TESTS)
 	@$(call rich_echo,"TESTLD","$@")
@@ -95,4 +103,3 @@ fclean: clean
 	@$(MAKE) -C $(VM_DIR) fclean
 
 .PHONY: clean fclean re all asm vm tests tests_run
-.NOTPARALLEL:

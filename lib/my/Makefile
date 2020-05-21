@@ -1,7 +1,7 @@
-# EPITECH PROJECT, 2020
-# COREWAR
+# EPITECH PROJECT, 2019
+# LIBMY
 # File description:
-# Corewar VM
+# Makefile for libmy
 
 
 CC          := gcc
@@ -45,13 +45,16 @@ endef
 
 all: $(OUTPUT)
 
-tests: clean $(TESTS_OUT)
+tests:: clean
+tests:: $(TESTS_OUT)
 
 tests_run: tests
 	./$(TESTS_OUT)
-	$(GCOV) $(OBJS)
+	@$(call rich_echo,"GCOV","*.o")
+	@$(GCOV) $(OBJS) > /dev/null 2>&1
 
-re: fclean all
+re:: fclean
+re:: all
 
 copy-heads: $(DEST_HEADS)
 
@@ -92,4 +95,3 @@ fclean: clean
 	@rm -f $(OUTPUT) $(TESTS_OUT) $(wildcard *.gcov) $(DEST_HEADS)
 
 .PHONY: all tests tests_run re copy-heads clean fclean doc
-.NOTPARALLEL:
