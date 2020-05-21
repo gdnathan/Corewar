@@ -92,7 +92,7 @@ clean:
 	@$(call rich_echo,"RM","$(BUILD_DIR)/*.o")
 	@rm -f $(OBJS_ASM) $(OBJS_VM) $(OBJS_TESTS)
 	@$(call rich_echo,"RM","*.gcda *.gcno")
-	@find $(BUILD_DIR) -name "*.gcda" -delete -or -name "*.gcno" -delete; true
+	@find $(BUILD_DIR) -name "*.gcda" -delete -or -name "*.gcno" -delete 2>/dev/null; true
 	@$(MAKE) -C $(LIBMY_DIR) clean
 	@$(MAKE) -C $(ASM_DIR) clean
 	@$(MAKE) -C $(VM_DIR) clean

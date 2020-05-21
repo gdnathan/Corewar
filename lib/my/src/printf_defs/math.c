@@ -18,7 +18,7 @@ int def_int_dec(struct flag_runnable opts, va_list args)
     if (str_contains(opts.flags, 'l') != -1)
         i = va_arg(args, long);
     else if (str_contains(opts.flags, 's') != -1)
-        i = va_arg(args, short);
+        i = va_arg(args, int);
     else
         i = va_arg(args, int);
     if (opts.padding > 0)
