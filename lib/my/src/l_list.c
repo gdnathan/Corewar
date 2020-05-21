@@ -56,4 +56,3 @@ void l_pop(l_elem_t *elem)
         elem->next->prev = elem->prev;
     free(elem);
 }
-

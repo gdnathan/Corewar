@@ -10,7 +10,7 @@
 
 Test(my_strstr, match)
 {
-    cr_assert_str_eq(my_strstr("Hello world", "lo"), "lo world");    
+    cr_assert_str_eq(my_strstr("Hello world", "lo"), "lo world");
 }
 
 Test(my_strstr, no_match)

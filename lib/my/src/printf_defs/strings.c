@@ -31,4 +31,3 @@ int def_puts(struct flag_runnable opts, va_list args)
         my_putchar_n((-opts.padding) - my_strlen(s), ' ');
     return (0);
 }
-

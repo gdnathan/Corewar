@@ -22,4 +22,3 @@ Test(my_getnbr, nbr_invalid)
 {
     cr_assert_eq(my_getnbr("nope"), 0);
 }
-
