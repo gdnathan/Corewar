@@ -53,7 +53,7 @@ tests:: $(TESTS_OUT)
 tests_run: tests
 	@$(MAKE) -C $(LIBMY_DIR) tests_run
 	./$(TESTS_OUT)
-	@$(call rich_echo,"GCOV", "\*.o")
+	@$(call rich_echo,"GCOV","\*.o")
 	@$(GCOV) $(OBJS_ASM) $(OBJS_VM) >/dev/null 2>&1
 
 asm: $(LIBMY) $(ASM_DIR)/Makefile
