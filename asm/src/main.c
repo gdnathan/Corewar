@@ -6,6 +6,7 @@
 */
 
 #include "main.h"
+#ifndef __TESTS
 
 int main(int argc, char **argv)
 {
@@ -20,3 +21,5 @@ int main(int argc, char **argv)
     } while (argv[++i]);
     return (0);
 }
+
+#endif //__TESTS

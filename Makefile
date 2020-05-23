@@ -8,7 +8,7 @@ LIBMY_DIR    = lib/my
 LIBMY        = $(LIBMY_DIR)/libmy.a
 
 CC           = gcc
-CC_FLAGS     =
+CC_FLAGS     = -Ilib/include -I$(ASM_DIR)/include -I$(VM_DIR)/include
 ifneq (,$(findstring tests,$(MAKECMDGOALS)))
 	CC_FLAGS += -D__TESTS -fprofile-arcs -ftest-coverage
 endif

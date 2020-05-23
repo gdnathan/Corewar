@@ -5,7 +5,11 @@
 ** main.c
 */
 
+#ifndef __TESTS
+
 int main(int argc, char **argv)
 {
     return (0);
 }
+
+#endif //__TESTS
