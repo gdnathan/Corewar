@@ -27,6 +27,8 @@ VM_DIR       = corewar
 BUILD_DIR    = build
 TESTS_DIR    = tests
 
+TESTS_OUT    = corewar_tests
+
 SOURCE_ASM   = $(shell find $(ASM_DIR)/src -name "*.c")
 SOURCE_VM    = $(shell find $(VM_DIR)/src -name "*.c")
 SOURCE_TESTS = $(shell find $(TESTS_DIR)  -name "*.c")
