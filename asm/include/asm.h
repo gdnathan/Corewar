@@ -29,7 +29,6 @@ typedef struct instructions
     struct instructions *prev;
 } instructions_t;
 
-
 typedef struct label
 {
     char *name;
@@ -44,5 +43,6 @@ typedef struct info
     instructions_t *instruct;
     labels_t *label;
 } info_t;
+
 
 #endif /* !ASM_H_ */

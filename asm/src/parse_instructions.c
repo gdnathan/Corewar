@@ -15,6 +15,8 @@
 
 void new_label(labels_t **label, char *buffer, instructions_t *instruct);
 
+void check_opcode(instructions_t *new);
+
 int compute_size(instructions_t *new)
 {
     int i = 0;
@@ -93,6 +95,7 @@ void new_instruction(instructions_t **instruction, char *buffer,
     new->size = parse_parameters(new, my_strdup(buffer + ++i));
     new->next = NULL;
     new->prev = *instruction;
+    check_opcode(new);
     if (*instruction == NULL)
         *instruction = new;
     else (*instruction)->next = new;
