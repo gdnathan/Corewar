@@ -106,7 +106,7 @@ int parse_infos(int fd, info_t *info)
     instructions_t *tmp = NULL;
 
     if (buffer == NULL) {
-        dprintf(2, "Error: File is empty.\n");
+        write(2, "Error: File is empty.\n", 23);
         return 84;
     }
     do {

@@ -13,7 +13,7 @@
 
 #define _malloc_error(ptr) \
     if (ptr == NULL) {\
-        dprintf(2, "An erro occured while allocating memory.\n");\
+        write(2, "An erro occured while allocating memory.\n", 42);\
         exit(84);\
     }\
 

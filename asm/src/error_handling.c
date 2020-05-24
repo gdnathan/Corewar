@@ -14,7 +14,7 @@
 int main_error(int ac, char **av)
 {
     if (ac == 1) {
-        dprintf(2 , USAGE);
+        write(2 ,USAGE, 33);
         exit (84);
     }
     return 0;
@@ -22,18 +22,19 @@ int main_error(int ac, char **av)
 
 int fd_error(char *file, int fd)
 {
+    write(2, file, my_strlen(file));
     switch errno {
         case EACCES:
-            dprintf(2, "%s: Permission Denied.\n", file);
+            write(2, ": Permission Denied.\n", 22);
             break;
         case EISDIR:
-            dprintf(2, "%s: Is a directory.\n", file);
+            write(2, ": Is a directory.\n", 19);
             break;
         case ENOENT:
-            dprintf(2, "%s: No such file or directory.\n", file);
+            write(2, ": No such file or directory.\n", 30);
             break;
         default:
-            dprintf(2, "%s: Error opening file. No debug information\n", file);
+            write(2, ": Error opening file. No debug information\n", 44);
     }
     return 84;
 }
