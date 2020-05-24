@@ -19,8 +19,10 @@ void new_instruction(instructions_t **instruction, char *buffer,
 
 int check_name(char *name)
 {
-    int i = 0;
+    static int i = 0;
 
+    if (i != 0)
+        return (84);
     while (name[i++] != '"') {
         if (!name[i])
             return (84);
@@ -40,8 +42,10 @@ int check_name(char *name)
 
 int check_description(char *description)
 {
-    int i = 0;
+    static int i = 0;
 
+    if (i != 0)
+        return (84);
     while (description[i++] != '"') {
         if (!description[i])
             return (84);
