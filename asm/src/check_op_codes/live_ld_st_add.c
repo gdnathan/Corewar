@@ -43,10 +43,10 @@ int check_ld(char *opcode, p_type_t types[4])
 
 int check_st(char *opcode, p_type_t types[4])
 {
-    if (types[0] != reg && types[0] != indirect) {
+    if (types[1] != direct && types[0] != lil_dir && types[0] != reg) {
         return 1;
     }
-    if (types[1] != reg) {
+    if (types[0] != reg) {
         return 1;
     }
     if (types[2] != nope) {

@@ -68,6 +68,8 @@ int set_basic_info(info_t *info, char *buffer)
     if (my_strncmp(buffer, "name", 4) == 1) {
         info->name = my_strdup(buffer + 6);
         info->name[my_strlen(info->name) - 1] = '\0';
+        while ((info->name[0] < 'a' || info->name[0] > 'z') && info->name[0] != '\0')
+            info->name++;
         if (check_name(buffer) == 84)
             return (84);
         return (0);
